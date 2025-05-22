@@ -18,8 +18,17 @@ function escapeHtml(str = "") {
     const tbody = document.querySelector("#resultsTable tbody");
     const unknownOnlyChk = document.getElementById("unknownOnly");
     const rareOnlyChk = document.getElementById("rareOnly");
+    const sentinel = document.getElementById("sentinel");
 
     let allData = [];
+    let currentRows = [];
+    let rendered = 0;
+    const CHUNK = 400;
+    const observer = new IntersectionObserver(entries => {
+        if (entries[0].isIntersecting) {
+            addChunk();
+        }
+    });
 
     // Fetch and parse nmap-services
     try {
@@ -82,23 +91,36 @@ function escapeHtml(str = "") {
             filtered = filtered.filter(d => d.frequency < 0.001);
         }
 
-        resultsCount.textContent = `${filtered.length.toLocaleString()} result${filtered.length !== 1 ? "s" : ""}`;
-        renderTable(filtered.slice(0, 2000)); // safety cap to 2000 rows
+        currentRows = filtered;
+        rendered = 0;
+        tbody.innerHTML = "";
+        addChunk();
+        observer.disconnect();
+        if (currentRows.length > rendered) {
+            observer.observe(sentinel);
+        }
+
+        resultsCount.textContent = `${currentRows.length.toLocaleString()} result${currentRows.length !== 1 ? "s" : ""}`;
     }
 
-    function renderTable(rows) {
-        if (!rows.length) {
-            tbody.innerHTML = `<tr><td colspan="4" style="text-align:center; color:var(--muted)">No matches found.</td></tr>`;
+    function addChunk() {
+        if (rendered >= currentRows.length) {
+            observer.disconnect();
             return;
         }
-        const html = rows
-            .map(
-                r => `<tr><td>${r.port}</td><td>${r.protocol}</td><td>${escapeHtml(
-                    r.service
-                )}</td><td>${escapeHtml(r.description)}</td></tr>`
-            )
-            .join("");
-        tbody.innerHTML = html;
+        const frag = document.createDocumentFragment();
+        const end = Math.min(rendered + CHUNK, currentRows.length);
+        for (let i = rendered; i < end; i++) {
+            const r = currentRows[i];
+            const tr = document.createElement("tr");
+            tr.innerHTML = `<td>${r.port}</td><td>${r.protocol}</td><td>${escapeHtml(r.service)}</td><td>${escapeHtml(r.description)}</td>`;
+            frag.appendChild(tr);
+        }
+        rendered = end;
+        tbody.appendChild(frag);
+        if (rendered >= currentRows.length) {
+            observer.disconnect();
+        }
     }
 
     function debounce(fn, ms = 0) {
