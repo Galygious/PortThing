@@ -16,6 +16,8 @@ function escapeHtml(str = "") {
     const protocolSelect = document.getElementById("protocolSelect");
     const resultsCount = document.getElementById("resultsCount");
     const tbody = document.querySelector("#resultsTable tbody");
+    const unknownOnlyChk = document.getElementById("unknownOnly");
+    const rareOnlyChk = document.getElementById("rareOnly");
 
     let allData = [];
 
@@ -35,6 +37,8 @@ function escapeHtml(str = "") {
     // Event listeners
     searchInput.addEventListener("input", debounce(update, 150));
     protocolSelect.addEventListener("change", update);
+    rareOnlyChk.addEventListener("change", update);
+    unknownOnlyChk.addEventListener("change", update);
 
     function parseServices(text) {
         const lines = text.split(/\r?\n/);
@@ -70,6 +74,12 @@ function escapeHtml(str = "") {
                     String(d.port).includes(query)
                 );
             });
+        }
+        if (unknownOnlyChk.checked) {
+            filtered = filtered.filter(d => d.service === "unknown");
+        }
+        if (rareOnlyChk.checked) {
+            filtered = filtered.filter(d => d.frequency < 0.001);
         }
 
         resultsCount.textContent = `${filtered.length.toLocaleString()} result${filtered.length !== 1 ? "s" : ""}`;
