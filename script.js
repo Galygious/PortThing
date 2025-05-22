@@ -97,6 +97,16 @@
             filtered = filtered.filter(d => d.frequency < 0.001);
         }
 
+        if (filtered.length === 0 && /^\d+$/.test(query)) {
+            const num = parseInt(query, 10);
+            if (num >= 0 && num <= 65535) {
+                const protos = protoFilter === "any" ? ["tcp", "udp", "sctp"] : [protoFilter];
+                protos.forEach(p => {
+                    filtered.push({ service: "unassigned", port: num, protocol: p, frequency: 0, description: "(unassigned)" });
+                });
+            }
+        }
+
         currentRows = filtered;
         rendered = 0;
         tbody.innerHTML = "";
