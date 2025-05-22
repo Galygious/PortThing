@@ -102,7 +102,7 @@
         tbody.innerHTML = "";
         addChunk();
         observer.disconnect();
-        if (currentRows.length > rendered && sentinel) {
+        if (currentRows.length > rendered && sentinel instanceof HTMLElement) {
             observer.observe(sentinel);
         }
 
