@@ -18,7 +18,13 @@
     const tbody = document.querySelector("#resultsTable tbody");
     const unknownOnlyChk = document.getElementById("unknownOnly");
     const rareOnlyChk = document.getElementById("rareOnly");
-    const sentinel = document.getElementById("sentinel");
+    let sentinel = document.getElementById("sentinel");
+    if (!sentinel) {
+        sentinel = document.createElement("div");
+        sentinel.id = "sentinel";
+        sentinel.style.height = "1px";
+        document.body.appendChild(sentinel);
+    }
 
     let allData = [];
     let currentRows = [];
@@ -96,7 +102,7 @@
         tbody.innerHTML = "";
         addChunk();
         observer.disconnect();
-        if (currentRows.length > rendered) {
+        if (currentRows.length > rendered && sentinel) {
             observer.observe(sentinel);
         }
 
