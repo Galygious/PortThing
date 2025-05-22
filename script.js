@@ -1,17 +1,17 @@
 // PortThing – script.js
 
-const escapeMap = {
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    '"': "&quot;",
-    "'": "&#039;"
-};
-function escapeHtml(str = "") {
-    return str.replace(/[&<>"']/g, m => escapeMap[m]);
-}
-
 (async function () {
+    const escapeMap = {
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+    };
+    function escapeHtml(str = "") {
+        return str.replace(/[&<>"']/g, m => escapeMap[m]);
+    }
+
     const searchInput = document.getElementById("searchInput");
     const protocolSelect = document.getElementById("protocolSelect");
     const resultsCount = document.getElementById("resultsCount");
