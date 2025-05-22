@@ -1,0 +1,122 @@
+/* PortThing Dark Theme Styles */
+
+:root {
+    --bg: #121212;
+    --surface: #1e1e1e;
+    --text: #d0d0d0;
+    --muted: #8a8a8a;
+    --accent: #3a8bfd;
+    --radius: 6px;
+    --font: "Inter", "Segoe UI", Roboto, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    height: 100%;
+}
+
+.app-header {
+    text-align: center;
+    padding: 2rem 1rem 1rem;
+    background: var(--surface);
+    border-bottom: 1px solid #222;
+}
+
+.app-header h1 {
+    margin: 0;
+    font-size: 2rem;
+    color: var(--accent);
+}
+
+.subtitle {
+    margin-top: .25rem;
+    color: var(--muted);
+    font-size: .9rem;
+}
+
+.controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
+    padding: 1rem;
+    background: var(--bg);
+}
+
+.controls input[type="text"],
+.controls select {
+    padding: .6rem .8rem;
+    font-size: 1rem;
+    background: var(--surface);
+    border: 1px solid #333;
+    border-radius: var(--radius);
+    color: var(--text);
+    outline: none;
+    min-width: 220px;
+}
+
+.controls input:focus,
+.controls select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px rgb(58 139 253 / 40%);
+}
+
+#resultsCount {
+    align-self: center;
+    font-size: .95rem;
+    color: var(--muted);
+}
+
+.table-wrapper {
+    max-width: 1000px;
+    margin: 0 auto 3rem;
+    padding: 0 1rem;
+}
+
+#resultsTable {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #222;
+}
+
+#resultsTable thead tr {
+    background: #1a1a1a;
+}
+
+#resultsTable th, #resultsTable td {
+    padding: .6rem .8rem;
+    border-bottom: 1px solid #222;
+    text-align: left;
+    font-size: .95rem;
+}
+
+#resultsTable tbody tr:hover {
+    background: #222;
+}
+
+.app-footer {
+    text-align: center;
+    padding: 1.5rem 1rem;
+    color: var(--muted);
+    font-size: .85rem;
+}
+
+.app-footer a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+@media (max-width: 640px) {
+    #resultsTable th:nth-child(4),
+    #resultsTable td:nth-child(4) {
+        display: none; /* Hide description on small screens */
+    }
+} 

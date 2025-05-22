@@ -1,0 +1,49 @@
+<!-- PortThing - Port Search Tool -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PortThing – Port Search</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <header class="app-header">
+        <h1>PortThing</h1>
+        <p class="subtitle">Ultra-fast Nmap Port &amp; Service Search</p>
+    </header>
+
+    <section class="controls">
+        <input type="text" id="searchInput" placeholder="Search by service, description or port…" autofocus />
+        <select id="protocolSelect">
+            <option value="any">Any Protocol</option>
+            <option value="tcp">TCP</option>
+            <option value="udp">UDP</option>
+            <option value="sctp">SCTP</option>
+        </select>
+        <span id="resultsCount">0 results</span>
+    </section>
+
+    <section class="table-wrapper">
+        <table id="resultsTable">
+            <thead>
+                <tr>
+                    <th>Port</th>
+                    <th>Protocol</th>
+                    <th>Service</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Populated by script.js -->
+            </tbody>
+        </table>
+    </section>
+
+    <footer class="app-footer">
+        <p>Data: <a href="https://nmap.org/" target="_blank">nmap-services</a>. Built with ❤️ using static HTML &amp; JS.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 
