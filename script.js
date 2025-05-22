@@ -1,5 +1,16 @@
 // PortThing – script.js
 
+const escapeMap = {
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#039;"
+};
+function escapeHtml(str = "") {
+    return str.replace(/[&<>"']/g, m => escapeMap[m]);
+}
+
 (async function () {
     const searchInput = document.getElementById("searchInput");
     const protocolSelect = document.getElementById("protocolSelect");
@@ -86,16 +97,5 @@
             clearTimeout(timer);
             timer = setTimeout(() => fn.apply(this, args), ms);
         };
-    }
-
-    const escapeMap = {
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#039;"
-    };
-    function escapeHtml(str = "") {
-        return str.replace(/[&<>"']/g, m => escapeMap[m]);
     }
 })(); 
