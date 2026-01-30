@@ -24,6 +24,25 @@
         <span id="resultsCount">0 results</span>
     </section>
 
+    <section class="unused-ranges">
+        <div class="unused-header">
+            <h2>Unused Port Ranges</h2>
+            <p>Consecutive unused ports for the selected protocol, sorted by size (largest first).</p>
+        </div>
+        <div class="unused-controls">
+            <label>
+                Minimum range size
+                <input type="number" id="unusedMinLength" min="1" value="25" />
+            </label>
+            <label>
+                Max ranges to show
+                <input type="number" id="unusedMaxRanges" min="1" value="15" />
+            </label>
+            <span id="unusedSummary">Loading ranges…</span>
+        </div>
+        <ul id="unusedRanges" class="unused-list"></ul>
+    </section>
+
     <section class="table-wrapper">
         <table id="resultsTable">
             <thead>
